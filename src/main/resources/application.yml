@@ -1,0 +1,37 @@
+server:
+  port: 9090
+
+spring:
+  profiles:
+    group:
+      local: db, jwt, mail, oauth
+    active: local
+  application:
+    name: secure-login
+  mvc:
+    web:
+      encoding:
+        charset: UTF-8
+        enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  level:
+    org.jasypt: DEBUG
+    org.springframework.security: DEBUG
+
+jasypt:
+  encryptor:
+    password: ${ENCRYPT_KEY}
+    algorithm: PBEWithMD5AndDES
+    key-obtention-iterations: 1000
+    pool-size: 1
+    salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    string-output-type: base64
