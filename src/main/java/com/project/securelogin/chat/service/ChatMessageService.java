@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -63,7 +65,7 @@ public class ChatMessageService {
     }
 
     // 메시지 중요 표시/해제
-    public void toggleMessageImportance(Long messageId) {
+    public ChatMessage toggleMessageImportance(Long messageId) {
         ChatMessage chatMessage = chatMessageRepository.findById(messageId)
                 .orElseThrow(() -> new IllegalArgumentException("메시지가 존재하지 않습니다."));
 
@@ -75,6 +77,7 @@ public class ChatMessageService {
         }
 
         chatMessageRepository.save(chatMessage);
+        return chatMessage;
     }
 
     // 메시지 삭제
@@ -87,16 +90,17 @@ public class ChatMessageService {
     }
 
     // 파일 URL 첨부
-    public void attachFileToMessage(Long messageId, String fileUrl) {
+    public ChatMessage attachFileToMessage(Long messageId, String fileUrl) {
         ChatMessage chatMessage = chatMessageRepository.findById(messageId)
                 .orElseThrow(() -> new IllegalArgumentException("메시지가 존재하지 않습니다."));
 
         chatMessage.setFileUrl(fileUrl);
         chatMessageRepository.save(chatMessage);
+        return chatMessage;
     }
 
     // 답장 메시지 설정
-    public void replyToMessage(Long messageId, Long replyToMessageId) {
+    public ChatMessage replyToMessage(Long messageId, Long replyToMessageId) {
         ChatMessage chatMessage = chatMessageRepository.findById(messageId)
                 .orElseThrow(() -> new IllegalArgumentException("메시지가 존재하지 않습니다."));
         ChatMessage replyToMessage = chatMessageRepository.findById(replyToMessageId)
@@ -104,5 +108,11 @@ public class ChatMessageService {
 
         chatMessage.setReplyToMessage(replyToMessage);
         chatMessageRepository.save(chatMessage);
+        return chatMessage;
+    }
+
+    // 채팅방의 모든 메시지 조회
+    public List<ChatMessage> getMessagesByChatRoom(Long chatRoomId) {
+        return chatMessageRepository.findByChatRoomId(chatRoomId);
     }
 }

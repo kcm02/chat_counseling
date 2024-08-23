@@ -1,6 +1,6 @@
 package com.project.securelogin.global.oauth.handler;
 
-import com.project.securelogin.global.dto.JsonResponse;
+import com.project.securelogin.global.dto.UserJsonResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class OAuth2LoginFailureHandler extends SimpleUrlAuthenticationFailureHan
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        JsonResponse jsonResponse = new JsonResponse(
+        UserJsonResponse userJsonResponse = new UserJsonResponse(
                 HttpServletResponse.SC_UNAUTHORIZED,
                 "로그인 실패",
                 null
@@ -24,6 +24,6 @@ public class OAuth2LoginFailureHandler extends SimpleUrlAuthenticationFailureHan
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
-        response.getWriter().write(jsonResponse.toString());
+        response.getWriter().write(userJsonResponse.toString());
     }
 }

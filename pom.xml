@@ -70,6 +70,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Web Socket (실시간 채팅) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+
         <!-- 스프링 시큐리티 (Spring Security) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,6 +1,6 @@
 package com.project.securelogin.controller;
 
-import com.project.securelogin.global.dto.JsonResponse;
+import com.project.securelogin.global.dto.UserJsonResponse;
 import com.project.securelogin.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,8 @@ public class EmailVerificationTest {
         String verificationUrl = "/user/verify/" + token;
 
         // Mock 객체 설정
-        JsonResponse jsonResponse = new JsonResponse(HttpStatus.OK.value(), "이메일 인증이 완료되었습니다.", null);
-        when(userService.verifyEmail(anyString())).thenReturn(jsonResponse.getData());
+        UserJsonResponse userJsonResponse = new UserJsonResponse(HttpStatus.OK.value(), "이메일 인증이 완료되었습니다.", null);
+        when(userService.verifyEmail(anyString())).thenReturn(userJsonResponse.getData());
 
         // MockMvc를 이용한 요청 및 응답 검증
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
