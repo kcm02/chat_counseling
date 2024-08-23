@@ -48,7 +48,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        return new UserResponseDTO(user.getUsername(), user.getEmail());
+        return UserResponseDTO.from(user);
     }
 
     // 이메일 검증
@@ -56,13 +56,13 @@ public class UserService {
         User user = findUserByVerificationToken(token);
         user.enableAccount(); // 엔티티 메서드 사용
         userRepository.save(user);
-        return new UserResponseDTO(user.getUsername(), user.getEmail());
+        return UserResponseDTO.from(user);
     }
 
     // 회원 정보 조회
     public UserResponseDTO getUserById(Long userId) {
         User user = findUserById(userId);
-        return new UserResponseDTO(user.getUsername(), user.getEmail());
+        return UserResponseDTO.from(user);
     }
 
     // 회원 정보 수정
@@ -80,7 +80,7 @@ public class UserService {
             }
 
             userRepository.save(user);
-            return new UserResponseDTO(user.getUsername(), user.getEmail());
+            return UserResponseDTO.from(user);
         }).orElseThrow(() -> new IllegalStateException("사용자를 찾을 수 없습니다."));
     }
 

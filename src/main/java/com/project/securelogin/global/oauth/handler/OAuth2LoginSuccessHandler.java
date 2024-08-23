@@ -3,7 +3,7 @@ package com.project.securelogin.global.oauth.handler;
 import com.project.securelogin.global.oauth.domain.CustomOAuth2User;
 import com.project.securelogin.user.domain.CustomUserDetails;
 import com.project.securelogin.user.domain.User;
-import com.project.securelogin.global.dto.JsonResponse;
+import com.project.securelogin.global.dto.UserJsonResponse;
 import com.project.securelogin.user.dto.UserResponseDTO;
 import com.project.securelogin.global.jwt.JwtTokenProvider;
 import com.project.securelogin.global.oauth.userInfo.OAuth2UserInfo;
@@ -51,15 +51,16 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh-Token", refreshToken);
 
-        JsonResponse jsonResponse = new JsonResponse(
+        UserResponseDTO userResponseDTO = UserResponseDTO.from(user); // UserResponseDTO로 변환
+        UserJsonResponse userJsonResponse = new UserJsonResponse(
                 HttpServletResponse.SC_OK,
                 "로그인 성공",
-                new UserResponseDTO(customOAuth2User.getName(), customOAuth2User.getEmail())
+                userResponseDTO
         );
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        response.getWriter().write(jsonResponse.toJson());
+        response.getWriter().write(userJsonResponse.toJson());
     }
 }

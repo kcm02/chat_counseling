@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class JsonResponse {
+public class UserJsonResponse {
     private final int statusCode;
     private final String message;
     private UserResponseDTO data;
